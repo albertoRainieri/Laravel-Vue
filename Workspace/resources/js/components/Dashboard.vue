@@ -1,8 +1,18 @@
 <template>
     <section class="content">
         <div class="container-fluid">
-            <div class="row ">
+            <div class="card-header">
+                <h1 class="card-title">Hi {{$gate.user.name}}! Find your Best Item</h1>
 
+                <div class="card-tools">
+
+                    <a href="PersonalArea">
+                        <button type="button" class="btn btn-sm btn-primary">
+                            <i class="fa fa-plus-square"></i>
+                            Your Personal Area
+                        </button>
+                    </a>
+                </div>
             </div>
             <!-- /.row -->
 

@@ -14,7 +14,7 @@
         <router-link to="/products" class="nav-link">
           <i class="nav-icon fas fa-list orange"></i>
           <p>
-            Product
+            Post your Product
           </p>
         </router-link>
       </li>

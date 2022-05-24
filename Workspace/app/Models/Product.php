@@ -44,9 +44,10 @@ class Product extends Model
         return $this->hasMany(Order::class);
     }
 
-    public function users()
+    public function products()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'purchases',
+            'user_id', 'product_id' );
     }
 
 

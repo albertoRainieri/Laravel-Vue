@@ -7,13 +7,13 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Your Product List ({{$gate.user.name}})</h3>
+                <h3 class="card-title"> Welcome to the Supplier Section {{$gate.user.name}}! </h3>
 
                 <div class="card-tools">
 
                   <button type="button" class="btn btn-sm btn-primary" @click="newModal">
                       <i class="fa fa-plus-square"></i>
-                      Add New
+                      Add New Product
                   </button>
                 </div>
               </div>
@@ -34,7 +34,7 @@
 
                   <tr v-for="product in products.data" :key="product.id">
 <!--                         <td>{{product.photo}}</td>-->
-                      <img :src="product.photo" width="300" height="200"/>
+                      <img :src="product.photo" width="250" height="170"/>
                       <td>{{product.name}}</td>
                       <td>{{product.description | truncate(30, '...')}}</td>
                       <td>{{product.price}}</td>
