@@ -46,34 +46,23 @@ A very simple Laravel 8 + Vue 2 + AdminLTE 3 based Curd Starter template for SPA
 
 [//]: # (- Build with Docker)
 
-## Installation
-
-- `git clone https://github.com/AnowarCST/laravel-vue-crud-starter.git`
-- `cd laravel-vue-crud-starter/`
-- `composer install`
-- `cp .env.example .env`
-- Update `.env` and set your database credentials
-- `php artisan key:generate`
-- `php artisan migrate`
-- `php artisan db:seed`
-- `php artisan passport:install`
-- `npm install`
-- `npm run dev`
-- `php artisan serve`
 
 ## Install with Docker
-- `cd Docker`
+- `git clone https://github.com/albertoRainieri/FullStack_Application_Laravel_Vue.js.git`
+- `cd FullStack_Application_Laravel_Vue.js/Docker`
 - `cp .env.example .env`
 - `docker-compose up -d mysql phpmyadmin apache2 php-fpm workspace`
 - `docker-compose exec workspace bash`
 - `composer install`
 - `cp .env.example .env`
+- `npm install`
 - `php artisan key:generate`
 - `php artisan migrate`
 - `php artisan db:seed`
 - `php artisan passport:install`
-- Application http://localhost/
-- PHPMyAdmin for Database http://localhost:8081/
+
+- Navigate to: http://localhost/
+- PhpMyAdmin for Database http://localhost:8081/
 
 
 [//]: # (## Unit Test)
