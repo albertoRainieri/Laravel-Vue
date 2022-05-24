@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Role;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
-use App\Models\Role;
+use App\Models\Product;
 
 class User extends Authenticatable // implements MustVerifyEmail
 {
@@ -63,6 +64,11 @@ class User extends Authenticatable // implements MustVerifyEmail
         return $this->belongsToMany(Role::class);
     }
 
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
+
     /**
      * Assigning User role
      *
@@ -78,14 +84,31 @@ class User extends Authenticatable // implements MustVerifyEmail
         return $this->roles()->where('name', 'Admin')->exists();
     }
 
-    public function isUser()
+    public function isUserOrAdmin()
     {
-        return $this->roles()->where('name', 'user')->exists();
+        if ($this->roles()->where('name', 'user')->exists() || $this->roles()->where('name', 'Admin')->exists())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 
-    public function isSupplier()
+    public function isSupplierOrAdmin()
     {
-        return $this->roles()->where('name', 'supplier')->exists();
-
+        if ($this->roles()->where('name', 'supplier')->exists() || $this->roles()->where('name', 'Admin')->exists())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
+
+
+
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Requests\Products\ProductRequest;
 use App\Models\Product;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProductController extends BaseController
@@ -53,6 +54,7 @@ class ProductController extends BaseController
             'description' => $request->get('description'),
             'price' => $request->get('price'),
             'category_id' => $request->get('category_id'),
+            'user_id' => $request->get('user_id'),
             'photo' => $path,
 
         ]);
@@ -143,5 +145,15 @@ class ProductController extends BaseController
         $request->file->move(public_path('upload'), $fileName);
 
         return response()->json(['success' => true]);
+    }
+
+    public function getSupplierProducts(Request  $request, $id)
+    {
+        $products= Product::select(Product::PRODUCT_PHOTO, Product::PRODUCT_NAME, Product::PRODUCT_CATEGORY_ID, Product::PRODUCT_DESCRIPTION, Product::PRODUCT_PRICE)
+            ->where(Product::PRODUCT_USER_ID, $id)->get();
+
+        $user = User::where(User::USER_ID, $id)->first()->value(User::USER_NAME);
+
+        return $this->sendResponse($products, 'Product list for: ' . $user);
     }
 }

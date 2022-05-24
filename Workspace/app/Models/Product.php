@@ -17,6 +17,7 @@ class Product extends Model
     const PRODUCT_PHOTO = 'photo';
     const PRODUCT_CATEGORY_ID = 'category_id';
     const PRODUCT_TABLE = 'products';
+    const PRODUCT_USER_ID = 'user_id';
 
     /**
      * The attributes that are mass assignable.
@@ -24,7 +25,7 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'price', 'photo', 'category_id'
+        'name', 'description', 'price', 'photo', 'category_id', 'user_id'
     ];
 
 
@@ -41,6 +42,11 @@ class Product extends Model
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 
 

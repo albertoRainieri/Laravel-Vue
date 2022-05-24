@@ -33,6 +33,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('tag/list', 'TagController@list');
     Route::get('category/list', 'CategoryController@list');
     Route::post('product/upload', 'ProductController@upload');
+    Route::get('product/{id}', 'ProductController@getSupplierProducts');
 
     Route::apiResources([
         'user' => 'UserController',

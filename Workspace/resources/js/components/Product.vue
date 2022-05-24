@@ -1,9 +1,9 @@
 <template>
     <ul className="about-company-list">
-        <li v-for="item in items">
-            <img src="/storage/logo.png" width="300" height="200">
+        <li v-for="product in products.data">
+            <img :src="product.photo" width="300" height="200">
             <div class="col-6">
-                {{item.description}}
+                {{product.description}}
             </div>
         </li>
     </ul>
@@ -15,8 +15,28 @@ export default {
 
     data() {
         return {
-            items: [{ message: 'Foo', description: 'car1 car2 car3' }, { description: 'car4 car car6' }]
+            products: []
         }
+    },
+
+    methods: {
+        loadAllProducts()
+        {
+            axios.get("api/product").then(({ data }) =>
+                (
+                    this.products = data.data,
+                        console.log(this.products)
+                )
+            );
+        }
+    },
+
+    created() {
+        this.loadAllProducts()
+        {
+
+        }
+
     }
 }
 

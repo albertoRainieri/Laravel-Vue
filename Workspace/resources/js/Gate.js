@@ -17,14 +17,20 @@ export default class Gate{
     }
 
     isAdminOrUser(){
+        return this.user.type === 'admin';
+
         if(this.user.type === 'user' || this.user.type === 'admin'){
             return true;
         }
     }
 
-    isSupplierOrUser(){
+    isSupplierOrAdmin(){
         if(this.user.type === 'supplier' || this.user.type === 'admin'){
             return true;
+        }
+        else
+        {
+            return false
         }
     }
 }

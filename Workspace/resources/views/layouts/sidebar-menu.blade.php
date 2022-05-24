@@ -9,6 +9,7 @@
         </router-link>
       </li>
 
+    @can('isSupplierOrAdmin')
       <li class="nav-item">
         <router-link to="/products" class="nav-link">
           <i class="nav-icon fas fa-list orange"></i>
@@ -17,8 +18,20 @@
           </p>
         </router-link>
       </li>
+        @endcan
 
-      @can('isAdmin')
+            <li class="nav-item">
+                <router-link to="/PersonalArea" class="nav-link">
+                    <i class="nav-icon fas fa-list orange"></i>
+                    <p>
+                        Personal Area
+                    </p>
+                </router-link>
+            </li>
+
+
+
+    @can('isAdmin')
         <li class="nav-item">
           <router-link to="/users" class="nav-link">
             <i class="fa fa-users nav-icon blue"></i>
@@ -27,7 +40,7 @@
         </li>
       @endcan
 
-      
+
 
       @can('isAdmin')
       <li class="nav-item has-treeview">
@@ -56,7 +69,7 @@
               </p>
             </router-link>
           </li>
-          
+
             <li class="nav-item">
               <router-link to="/developer" class="nav-link">
                   <i class="nav-icon fas fa-cogs white"></i>
@@ -69,8 +82,8 @@
       </li>
 
       @endcan
-      
-      
+
+
 
       <li class="nav-item">
         <a href="#" class="nav-link" onclick="event.preventDefault();

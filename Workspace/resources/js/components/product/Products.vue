@@ -7,7 +7,7 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Product List</h3>
+                <h3 class="card-title">Your Product List ({{$gate.user.name}})</h3>
 
                 <div class="card-tools">
 
@@ -22,21 +22,21 @@
                 <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>ID</th>
+                      <th>Photo</th>
                       <th>Name</th>
                       <th>Description</th>
-                      <th>Category</th>
                       <th>Price</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                     <tr v-for="product in products.data" :key="product.id">
+<!--                  <img v-for="product in products.data" :src="product.photo" width="300" height="200"/>-->
 
-                      <td>{{product.id}}</td>
+                  <tr v-for="product in products.data" :key="product.id">
+<!--                         <td>{{product.photo}}</td>-->
+                      <img :src="product.photo" width="300" height="200"/>
                       <td>{{product.name}}</td>
                       <td>{{product.description | truncate(30, '...')}}</td>
-                      <td>{{product.category.name}}</td>
                       <td>{{product.price}}</td>
                       <!-- <td><img v-bind:src="'/' + product.photo" width="100" alt="product"></td> -->
                       <td>
@@ -166,7 +166,7 @@
             onFileSelected(event)
             {
                 this.photo = event.target.files[0]
-                console.log(this.photo)
+                //console.log(this.photo)
             },
 
           getResults(page = 1) {
@@ -177,14 +177,20 @@
 
               this.$Progress.finish();
           },
-          loadProducts(){
+          loadProductsSupplier(){
 
             // if(this.$gate.isAdmin()){
-              axios.get("api/product").then(({ data }) => (this.products = data.data));
+              axios.get("api/product/" + this.$gate.user.id).then(({ data }) =>
+                  (
+                      this.products = data,
+                          console.log(this.products)
+                  )
+              );
             // }
           },
           loadCategories(){
-              axios.get("/api/category/list").then(({ data }) => (this.categories = data.data));
+              axios.get("/api/category/list").then(({ data }) =>
+                  (this.categories = data.data));
           },
           loadTags(){
               axios.get("/api/tag/list").then(response => {
@@ -215,6 +221,7 @@
               this.form.append('description', this.description)
               this.form.append('price', this.price)
               this.form.append('category_id', this.category_id)
+              this.form.append('user_id', this.$gate.user.id)
 
 
               axios.post('api/product', this.form)
@@ -227,7 +234,7 @@
                         title: data.data.message
                     });
                   this.$Progress.finish();
-                  this.loadProducts();
+                  this.loadProductsSupplier();
 
                 } else {
                   Toast.fire({
@@ -259,7 +266,7 @@
                   this.$Progress.finish();
                       //  Fire.$emit('AfterCreate');
 
-                  this.loadProducts();
+                  this.loadProductsSupplier();
               })
               .catch(() => {
                   this.$Progress.fail();
@@ -278,14 +285,14 @@
 
                       // Send request to the server
                         if (result.value) {
-                              this.form.delete('api/product/'+id).then(()=>{
+                              this.delete('api/product/'+id, this.form).then(()=>{
                                       Swal.fire(
                                       'Deleted!',
                                       'Your file has been deleted.',
                                       'success'
                                       );
                                   // Fire.$emit('AfterCreate');
-                                  this.loadProducts();
+                                  this.loadProductsSupplier();
                               }).catch((data)=> {
                                   Swal.fire("Failed!", data.message, "warning");
                               });
@@ -295,14 +302,14 @@
 
         },
         mounted() {
-
         },
         created() {
             this.$Progress.start();
 
-            this.loadProducts();
+            this.loadProductsSupplier();
             this.loadCategories();
             this.loadTags();
+            //console.log(this.products)
 
             this.$Progress.finish();
         },

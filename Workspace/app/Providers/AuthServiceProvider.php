@@ -40,22 +40,36 @@ class AuthServiceProvider extends ServiceProvider
             return $user->type === 'admin';
         });
 
-        Gate::define('isUser', function ($user) {
+        Gate::define('isUserOrAdmin', function ($user) {
             // if ($user->isUser()) {
             //     return true;
             // }
 
             // for simplicity
-            return $user->type === 'user';
+            if( $user->type === 'user' || $user->type === 'admin')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         });
 
-        Gate::define('isSupplier', function ($user) {
+        Gate::define('isSupplierOrAdmin', function ($user) {
             // if ($user->isUser()) {
             //     return true;
             // }
 
             // for simplicity
-            return $user->type === 'supplier';
+            if( $user->type === 'supplier' || $user->type === 'admin')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         });
     }
 }
