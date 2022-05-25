@@ -2,7 +2,7 @@
 
 ## About Repository
 
-A very simple Laravel 8 + Vue 2 + AdminLTE 3 based Curd Starter template for SPA Application.
+A very simple Laravel 8 + Vue 2
 
 [//]: # (<p align="center">)
 
@@ -58,10 +58,11 @@ A very simple Laravel 8 + Vue 2 + AdminLTE 3 based Curd Starter template for SPA
 - `npm install`
 - `php artisan key:generate`
 - `php artisan migrate`
-- `php artisan db:seed`
+- `php artisan db:seed --class=AdminUserSeeder`
 - `php artisan passport:install`
 
 - Navigate to: http://localhost/
+- Login as 'admin' with these credentials: 'email': admin@admin.com, 'password': 'adminpass'
 - PhpMyAdmin for Database http://localhost:8081/
 
 
@@ -107,3 +108,13 @@ A very simple Laravel 8 + Vue 2 + AdminLTE 3 based Curd Starter template for SPA
 
 [//]: # ()
 [//]: # ([MIT license]&#40;https://opensource.org/licenses/MIT&#41;.)
+
+
+## About The Application
+Working in progress E-commerce platform.
+There are three roles:
+1) Admin
+2) Supplier
+3) User
+
+The users can add product to their own carts, the suppliers can add their products to the main dashboard and finally the admin can see and do anything.

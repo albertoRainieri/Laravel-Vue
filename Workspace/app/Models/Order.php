@@ -9,10 +9,11 @@ class Order extends Model
 {
     use HasFactory;
 
-    const ORDER_ID = 'id';
     const ORDER_USER_ID = 'user_id';
     const ORDER_PRODUCT_ID = 'product_id';
-    const PRODUCT_TABLE = 'order';
+    const PRODUCT_TABLE = 'orders';
+    public $timestamps = false;
+
 
     /**
      * The attributes that are mass assignable.

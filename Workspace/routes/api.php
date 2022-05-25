@@ -34,11 +34,13 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::get('category/list', 'CategoryController@list');
     Route::post('product/upload', 'ProductController@upload');
     Route::get('product/{id}', 'ProductController@getSupplierProducts');
+    Route::get('cart/{id}', 'CartController@getUserProducts');
 
     Route::apiResources([
         'user' => 'UserController',
         'product' => 'ProductController',
         'category' => 'CategoryController',
         'tag' => 'TagController',
+        'cart' => 'CartController'
     ]);
 });

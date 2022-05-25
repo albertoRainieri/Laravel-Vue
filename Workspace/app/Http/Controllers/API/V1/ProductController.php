@@ -13,6 +13,7 @@ class ProductController extends BaseController
 
     protected $product = '';
 
+
     /**
      * Create a new controller instance.
      *

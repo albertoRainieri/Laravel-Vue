@@ -14,21 +14,22 @@
         <router-link to="/products" class="nav-link">
           <i class="nav-icon fas fa-list orange"></i>
           <p>
-            Post your Product
+            Personal Area Supplier
           </p>
         </router-link>
       </li>
         @endcan
 
+        @can('isUserOrAdmin')
             <li class="nav-item">
                 <router-link to="/PersonalArea" class="nav-link">
                     <i class="nav-icon fas fa-list orange"></i>
                     <p>
-                        Personal Area
+                        Personal Area User
                     </p>
                 </router-link>
             </li>
-
+        @endcan
 
 
     @can('isAdmin')

@@ -3,7 +3,7 @@
 
 
         <li v-for="product in products.data">
-            <div type="button" @click="newModal">
+            <div type="button" @click="newModal(product.id)">
                 <img :src="product.photo" width="300" height="200">
             </div>
             <div class="col-6">
@@ -21,7 +21,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <div class="row">
-                            <h5 class="modal-title" > Hi {{$gate.user.name}}! Do you want to add this time to the cart?</h5>
+                            <h5 class="modal-title" > Hi {{$gate.user.name}}! Do you want to add this item to your cart?</h5>
                         </div>
 
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -48,6 +48,7 @@ export default {
     data() {
         return {
             products: [],
+            product_id: '',
         }
     },
 
@@ -56,23 +57,42 @@ export default {
         {
             axios.get("api/product").then(({ data }) =>
                 (
-                    this.products = data.data,
-                        console.log(this.products)
+                    this.products = data.data
+                        //console.log(this.products)
                 )
             );
         },
 
         addToCart()
         {
-            axios.post("api/cart").then(
-                ({data}) =>
-            (
-                this.response = data.data
-            )
+            this.$Progress.start();
+            axios.post("api/cart", {'user_id': this.$gate.user.id, 'product_id': this.product_id}).then(
+                response => {
+                    console.log('repsonse', response.data.ack)
+                    if (response.data.ack === 1)
+                    {
+                        $('#addNew').modal('hide');
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: response.data.message
+                        });
+                    }
+                    else
+                    {
+                        Toast.fire({
+                            icon: 'error',
+                            title: response.data.message
+                        });
+
+                    }
+                }
             );
         },
 
-        newModal(){
+        newModal(id){
+            this.product_id = id
+            console.log(this.product_id)
             this.editmode = false;
             //this.form.reset();
             $('#addNew').modal('show');
