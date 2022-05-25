@@ -6,12 +6,19 @@
 
                 <div class="card-tools">
 
-                    <a href="PersonalArea">
+                    <h1 v-if="$gate.user.type === 'admin' || $gate.user.type === 'supplier'" href="PersonalArea">
                         <button type="button" class="btn btn-sm btn-primary">
                             <i class="fa fa-plus-square"></i>
-                            Your Personal Area
+                            Your Personal Area (Supplier)
                         </button>
-                    </a>
+                    </h1>
+
+                    <h1 v-if="$gate.user.type === 'admin' || $gate.user.type === 'user'" href="PersonalArea">
+                        <button type="button" class="btn btn-sm btn-primary">
+                            <i class="fa fa-plus-square"></i>
+                            Your Personal Area (User)
+                        </button>
+                    </h1>
                 </div>
             </div>
             <!-- /.row -->

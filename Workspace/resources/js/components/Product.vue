@@ -3,7 +3,10 @@
 
 
         <li v-for="product in products.data">
-            <div type="button" @click="newModal(product.id)">
+            <div v-if="$gate.user.type === 'admin' || $gate.user.type === 'user'" type="button" @click="newModal(product.id)">
+                <img :src="product.photo" width="300" height="200">
+            </div>
+            <div v-if="$gate.user.type === 'supplier'" >
                 <img :src="product.photo" width="300" height="200">
             </div>
             <div class="col-6">
