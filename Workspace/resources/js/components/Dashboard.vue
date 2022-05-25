@@ -4,21 +4,23 @@
             <div class="card-header">
                 <h1 class="card-title">Hi {{$gate.user.name}}! Find your Best Item</h1>
 
-                <div class="card-tools">
+                <div class="card-tools" v-if="$gate.user.type === 'supplier'">
 
-                    <h1 v-if="$gate.user.type === 'admin' || $gate.user.type === 'supplier'" href="PersonalArea">
+                    <a href="products">
                         <button type="button" class="btn btn-sm btn-primary">
                             <i class="fa fa-plus-square"></i>
                             Your Personal Area (Supplier)
                         </button>
-                    </h1>
+                    </a>
+                </div>
 
-                    <h1 v-if="$gate.user.type === 'admin' || $gate.user.type === 'user'" href="PersonalArea">
+                <div class="card-tools" v-if="$gate.user.type === 'user'">
+                    <a href="PersonalArea">
                         <button type="button" class="btn btn-sm btn-primary">
                             <i class="fa fa-plus-square"></i>
                             Your Personal Area (User)
                         </button>
-                    </h1>
+                    </a>
                 </div>
             </div>
             <!-- /.row -->
