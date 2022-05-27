@@ -150,7 +150,6 @@
                 price: '',
                 category_id: '',
                 formEdit: new Form({
-                    photo: '',
                     name: '',
                     description: '',
                     price: '',
@@ -310,6 +309,7 @@
 
           },
           deleteProduct(id){
+
               Swal.fire({
                   title: 'Are you sure?',
                   text: "You won't be able to revert this!",
@@ -321,7 +321,7 @@
 
                       // Send request to the server
                         if (result.value) {
-                              this.delete('api/product/'+id, this.form).then(()=>{
+                              axios.delete('api/product/'+id, this.form).then(()=>{
                                       Swal.fire(
                                       'Deleted!',
                                       'Your file has been deleted.',

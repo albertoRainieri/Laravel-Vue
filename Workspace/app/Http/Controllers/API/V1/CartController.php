@@ -23,7 +23,7 @@ class CartController extends Controller
     public function getUserProducts(Request  $request, $id)
     {
         $products_id= Cart::where(Cart::USER_ID, $id)->pluck(Cart::PRODUCT_ID);
-        $products= Product::select(Product::PRODUCT_PHOTO, Product::PRODUCT_NAME, Product::PRODUCT_CATEGORY_ID, Product::PRODUCT_DESCRIPTION, Product::PRODUCT_PRICE)
+        $products= Product::select(Product::PRODUCT_ID, Product::PRODUCT_PHOTO, Product::PRODUCT_NAME, Product::PRODUCT_CATEGORY_ID, Product::PRODUCT_DESCRIPTION, Product::PRODUCT_PRICE)
         ->findMany($products_id)->all();
 
         return response()->json(['success' => true, 'products' => $products]);
@@ -46,5 +46,15 @@ class CartController extends Controller
         }
 
         return response()->json(array('ack' => 1, 'message'=>'Product Added to your Cart'));
+    }
+
+    public function destroy($id)
+    {
+
+        $product = Cart::where(Cart::PRODUCT_ID, $id);
+
+        $product->delete();
+
+        return response()->json(array('message' => 'Product has been Deleted'));
     }
 }

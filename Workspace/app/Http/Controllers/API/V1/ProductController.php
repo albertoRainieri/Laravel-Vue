@@ -101,12 +101,20 @@ class ProductController extends BaseController
      */
     public function update($id, Request $request)
     {
+        $product = Product::find($id);
 
-        return $request;
 
-        $path = $request->file('image')->store('storage');
+        foreach ($request->except('_token') as $key => $value) {
 
-        #return $request;
+            if ($product[$key] != $value)
+            {
+                $product[$key] = $value;
+            }
+        }
+
+        $product->save();
+
+        return $this->sendResponse($product, 'Product Edited Successfully');
 
         $product = $this->product->create([
             'name' => $request->get('name'),

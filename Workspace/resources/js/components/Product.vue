@@ -18,7 +18,7 @@
                         <p class="card-text">{{product.description}}</p>
                     </div>
                     <div class="card-footer" v-if="$gate.user.type === 'admin' || $gate.user.type === 'user'">
-                        <a href="#" class="btn btn-primary" v-on:click="addToCart">Add to Cart</a>
+                        <a href="#" class="btn btn-primary" v-on:click="addToCart(product.id)">Add to Cart</a>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button v-on:click="addToCart" type="submit" class="btn btn-primary">Add</button>
+                            <button v-on:click="addToCart(product_id)" type="submit" class="btn btn-primary">Add</button>
                         </div>
                     </div>
                 </div>
@@ -105,9 +105,13 @@ export default {
             );
         },
 
-        addToCart()
+        addToCart(id)
         {
             this.$Progress.start();
+            if (id != null)
+            {
+                this.product_id = id
+            }
             axios.post("api/cart", {'user_id': this.$gate.user.id, 'product_id': this.product_id}).then(
                 response => {
                     console.log('repsonse', response.data.ack)

@@ -33,11 +33,6 @@
                                     <td>{{product.price}}</td>
                                     <!-- <td><img v-bind:src="'/' + product.photo" width="100" alt="product"></td> -->
                                     <td>
-
-                                        <a href="#" @click="editModal(product)">
-                                            <i class="fa fa-edit blue"></i>
-                                        </a>
-                                        /
                                         <a href="#" @click="deleteProduct(product.id)">
                                             <i class="fa fa-trash red"></i>
                                         </a>
@@ -52,72 +47,6 @@
                         </div>
                     </div>
                     <!-- /.card -->
-                </div>
-            </div>
-
-            <!-- Modal -->
-            <div class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="addNew" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" v-show="!editmode">Create New Product</h5>
-                            <h5 class="modal-title" v-show="editmode">Edit Product</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-
-                        <form @submit.prevent="editmode ? updateProduct() : createProduct()">
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label>Name</label>
-                                    <input v-model="name" type="text" name="name"
-                                           class="form-control">
-                                    <!--                            :class="{ 'is-invalid': form.errors.has('name') }">-->
-                                    <!--                            <has-error :form="form" field="name"></has-error>-->
-                                </div>
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <input v-model="description" type="text" name="description"
-                                           class="form-control">
-                                    <!--                            :class="{ 'is-invalid': form.errors.has('description') }">-->
-                                    <!--                            <has-error :form="form" field="description"></has-error>-->
-                                </div>
-                                <div class="form-group">
-                                    <label>Price</label>
-                                    <input v-model="price" type="number" name="price"
-                                           class="form-control" >
-                                    <!--                                   :class="{ 'is-invalid': form.errors.has('price') }"-->
-                                    <!--                            <has-error :form="form" field="price"></has-error>-->
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Picture</label>
-                                    <input type="file" name="photo" multiple accept="image/png, image/jpeg" @change="onFileSelected"
-                                           class="form-control" >
-                                    <!--                            :class="{ 'is-invalid': form.errors.has('photo') }">-->
-                                    <!--                            <has-error :form="form" field="photo"></has-error>-->
-                                </div>
-                                <div class="form-group">
-
-                                    <label>Category</label>
-                                    <select class="form-control" v-model="category_id">
-                                        <option
-                                            v-for="(cat,index) in categories" :key="index"
-                                            :value="index"
-                                            :selected="index == category_id">{{ cat }}</option>
-                                    </select>
-                                    <!--                            <has-error :form="form" field="category_id"></has-error>-->
-                                </div>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button v-show="editmode" type="submit" class="btn btn-success">Update</button>
-                                <button v-show="!editmode" type="submit" class="btn btn-primary">Create</button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
@@ -157,11 +86,6 @@ export default {
     },
     methods: {
 
-        onFileSelected(event)
-        {
-            this.photo = event.target.files[0]
-            //console.log(this.photo)
-        },
 
         getResults(page = 1) {
 
@@ -193,80 +117,7 @@ export default {
                 });
             }).catch(() => console.warn('Oh. Something went wrong'));
         },
-        editModal(product){
-            this.editmode = true;
-            //this.form.reset();
-            $('#addNew').modal('show');
-            this.formEdit.fill(product);
-        },
-        newModal(){
-            this.editmode = false;
-            //this.form.reset();
-            $('#addNew').modal('show');
-        },
-        createProduct(){
-            this.$Progress.start();
-            // new formData
-            this.form = new FormData();
 
-            // APPend new keys
-            this.form.append('image', this.photo)
-            this.form.append('name', this.name)
-            this.form.append('description', this.description)
-            this.form.append('price', this.price)
-            this.form.append('category_id', this.category_id)
-            this.form.append('user_id', this.$gate.user.id)
-
-
-            axios.post('api/product', this.form)
-                .then((data)=>{
-                    if(data.data.success){
-                        $('#addNew').modal('hide');
-
-                        Toast.fire({
-                            icon: 'success',
-                            title: data.data.message
-                        });
-                        this.$Progress.finish();
-                        this.loadProductsUser();
-
-                    } else {
-                        Toast.fire({
-                            icon: 'error',
-                            title: 'Some error occured! Please try again'
-                        });
-
-                        this.$Progress.failed();
-                    }
-                })
-                .catch(()=>{
-
-                    Toast.fire({
-                        icon: 'error',
-                        title: 'Some error occured! Please try again'
-                    });
-                })
-        },
-        updateProduct(){
-            this.$Progress.start();
-            this.form.put('api/product/'+this.form.id)
-                .then((response) => {
-                    // success
-                    $('#addNew').modal('hide');
-                    Toast.fire({
-                        icon: 'success',
-                        title: response.data.message
-                    });
-                    this.$Progress.finish();
-                    //  Fire.$emit('AfterCreate');
-
-                    this.loadProductsUser();
-                })
-                .catch(() => {
-                    this.$Progress.fail();
-                });
-
-        },
         deleteProduct(id){
             Swal.fire({
                 title: 'Are you sure?',
@@ -276,10 +127,11 @@ export default {
                 cancelButtonColor: '#3085d6',
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
+                console.log('result: ', result)
 
                 // Send request to the server
                 if (result.value) {
-                    this.delete('api/product/'+id, this.form).then(()=>{
+                    axios.delete('api/cart/'+id).then(()=>{
                         Swal.fire(
                             'Deleted!',
                             'Your file has been deleted.',
@@ -303,7 +155,6 @@ export default {
         this.loadProductsUser();
         this.loadCategories();
         this.loadTags();
-        //console.log(this.products)
 
         this.$Progress.finish();
     },
