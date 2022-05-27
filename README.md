@@ -4,17 +4,13 @@
 
 A very simple Laravel 8 + Vue 2
 
-[//]: # (<p align="center">)
+<p align="center">
 
-[//]: # (<img src="https://i.imgur.com/mZAHbUL.png">)
+![alt text](https://github.com/albertoRainieri/FullStack_Application_Laravel_Vue.js/blob/main/Workspace/public/images/Dashboard.jpg?raw=true)
+![alt text](https://github.com/albertoRainieri/FullStack_Application_Laravel_Vue.js/blob/main/Workspace/public/images/SupplierSection.jpg?raw=true)
 
-[//]: # (<img src="https://i.imgur.com/3hhoQnq.png">)
-
-[//]: # (<img src="https://i.imgur.com/aHtQkYl.png">)
-
-[//]: # (<img src="https://i.imgur.com/V7OuwLn.png">)
-
-[//]: # (</p>)
+https://imgur.com/gallery/q9UubEY
+</p>
 
 ## Tech Specification
 
