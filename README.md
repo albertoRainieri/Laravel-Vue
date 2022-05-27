@@ -4,14 +4,6 @@
 
 A very simple Laravel 8 + Vue 2
 
-<p align="center">
-
-![alt text](https://github.com/albertoRainieri/FullStack_Application_Laravel_Vue.js/blob/main/Workspace/public/images/Dashboard.jpg?raw=true)
-![alt text](https://github.com/albertoRainieri/FullStack_Application_Laravel_Vue.js/blob/main/Workspace/public/images/SupplierSection.jpg?raw=true)
-
-https://imgur.com/gallery/q9UubEY
-</p>
-
 ## Tech Specification
 
 - Laravel 8
@@ -63,6 +55,14 @@ https://imgur.com/gallery/q9UubEY
 
 
 ## About The Application
+
+<p align="center">
+
+![alt text](./Workspace/public/images/Dashboard.png?raw=true)
+![alt text](./Workspace/public/images/SupplierSection.png?raw=true)
+
+</p>
+
 Working in progress E-commerce platform.
 There are three roles:
 1) Admin
