@@ -27,9 +27,10 @@
 
                                 <tr v-for="product in items" :key="product.id">
                                     <!--                         <td>{{product.photo}}</td>-->
-                                    <img :src="product.photo" width="250" height="170"/>
-                                    <td>{{product.name}}</td>
-                                    <td>{{product.description | truncate(30, '...')}}</td>
+                                    <div type="button" @click="visualize(product.photo)">
+                                        <img :src="product.photo" class="card-img-top" style="float: left; width:  200px; height: 200px; object-fit: cover;"/>
+                                    </div>                                    <td>{{product.name}}</td>
+                                    <td>{{product.description}}</td>
                                     <td>{{product.price}}</td>
                                     <!-- <td><img v-bind:src="'/' + product.photo" width="100" alt="product"></td> -->
                                     <td>
@@ -47,6 +48,18 @@
                         </div>
                     </div>
                     <!-- /.card -->
+
+                    <div class="modal fade" id="visualizePicture" tabindex="-1" role="dialog" aria-labelledby="visualizePicture" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="card-body">
+                                    <div>
+                                        <img :src="photo" class="card-img-top">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -116,6 +129,11 @@ export default {
                     return { text: a.name, id: a.id };
                 });
             }).catch(() => console.warn('Oh. Something went wrong'));
+        },
+
+        visualize(photo){
+            this.photo = photo;
+            $('#visualizePicture').modal('show');
         },
 
         deleteProduct(id){

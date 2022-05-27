@@ -34,7 +34,9 @@
 
                   <tr v-for="product in products.data" :key="product.id">
 <!--                         <td>{{product.photo}}</td>-->
-                      <img :src="product.photo" width="250" height="170"/>
+                      <div type="button" @click="visualize(product.photo)">
+                          <img :src="product.photo" class="card-img-top" style="float: left; width:  200px; height: 200px; object-fit: cover;"/>
+                      </div>
                       <td>{{product.name}}</td>
                       <td>{{product.description | truncate(30, '...')}}</td>
                       <td>{{product.price}}</td>
@@ -62,6 +64,18 @@
           </div>
         </div>
 
+
+        <div class="modal fade" id="visualizePicture" tabindex="-1" role="dialog" aria-labelledby="visualizePicture" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="card-body">
+                        <div>
+                            <img :src="photo" class="card-img-top">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Modal -->
         <div class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="addNew" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -209,6 +223,11 @@
               this.resetForm()
               $('#addNew').modal('show');
           },
+
+            visualize(photo){
+                this.photo = photo;
+                $('#visualizePicture').modal('show');
+            },
 
             fillForm(product)
             {
