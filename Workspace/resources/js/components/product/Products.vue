@@ -98,7 +98,7 @@
 <!--                            <has-error :form="form" field="price"></has-error>-->
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" v-if="editmode === false">
                             <label>Picture</label>
                             <input type="file" name="photo" multiple accept="image/png, image/jpeg" @change="onFileSelected"
                                    class="form-control" >
@@ -143,6 +143,7 @@
                 categories: [],
                 editmode: false,
                 products : {},
+                product_id: '',
                 photo: '',
                 name: '',
                 description: '',
@@ -182,8 +183,7 @@
             // if(this.$gate.isAdmin()){
               axios.get("api/product/" + this.$gate.user.id).then(({ data }) =>
                   (
-                      this.products = data,
-                          console.log(this.products)
+                      this.products = data
                   )
               );
             // }
@@ -201,29 +201,62 @@
           },
           editModal(product){
               this.editmode = true;
-              //this.form.reset();
+              this.fillForm(product)
               $('#addNew').modal('show');
-              this.formEdit.fill(product);
+
           },
           newModal(){
               this.editmode = false;
-              //this.form.reset();
+              this.resetForm()
               $('#addNew').modal('show');
           },
+
+            fillForm(product)
+            {
+                // APPend new keys
+                this.product_id = product.id
+                this.name = product.name
+                this.price = product.price
+                this.description = product.description
+                this.photo = product.photo
+                this.category_id = product.category_id
+            },
+
+            resetForm()
+            {
+                this.product_id = ''
+                this.name = ''
+                this.price = ''
+                this.description = ''
+                this.photo = ''
+                this.category_id = ''
+            },
+
+            createForm()
+            {
+                this.form = new FormData();
+                // APPend new keys
+                this.form.append('image', this.photo)
+                this.form.append('name', this.name)
+                this.form.append('description', this.description)
+                this.form.append('price', this.price)
+                this.form.append('category_id', this.category_id)
+                this.form.append('user_id', this.$gate.user.id)
+            },
+
+            editForm(){
+                this.formEdit.name = this.name
+                this.formEdit.description = this.description
+                this.formEdit.price = this.price
+                this.formEdit.category_id = this.category_id
+            },
+
           createProduct(){
               this.$Progress.start();
-              // new formData
-              this.form = new FormData();
 
-              // APPend new keys
-              this.form.append('image', this.photo)
-              this.form.append('name', this.name)
-              this.form.append('description', this.description)
-              this.form.append('price', this.price)
-              this.form.append('category_id', this.category_id)
-              this.form.append('user_id', this.$gate.user.id)
+              this.createForm();
 
-
+              console.log(this.form)
               axios.post('api/product', this.form)
               .then((data)=>{
                 if(data.data.success){
@@ -254,8 +287,11 @@
               })
           },
           updateProduct(){
+
               this.$Progress.start();
-              this.form.put('api/product/'+this.form.id)
+              this.editForm();
+
+              this.formEdit.put('api/product/'+ this.product_id)
               .then((response) => {
                   // success
                   $('#addNew').modal('hide');

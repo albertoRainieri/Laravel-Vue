@@ -99,8 +99,29 @@ class ProductController extends BaseController
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductRequest $request, $id)
+    public function update($id, Request $request)
     {
+
+        return $request;
+
+        $path = $request->file('image')->store('storage');
+
+        #return $request;
+
+        $product = $this->product->create([
+            'name' => $request->get('name'),
+            'description' => $request->get('description'),
+            'price' => $request->get('price'),
+            'category_id' => $request->get('category_id'),
+            'user_id' => $request->get('user_id'),
+            'photo' => $path,
+
+        ]);
+
+        return $this->sendResponse($product, 'Product Created Successfully');
+
+
+
         $product = $this->product->findOrFail($id);
 
         $product->update($request->all());
@@ -150,7 +171,7 @@ class ProductController extends BaseController
 
     public function getSupplierProducts(Request  $request, $id)
     {
-        $products= Product::select(Product::PRODUCT_PHOTO, Product::PRODUCT_NAME, Product::PRODUCT_CATEGORY_ID, Product::PRODUCT_DESCRIPTION, Product::PRODUCT_PRICE)
+        $products= Product::select(Product::PRODUCT_ID, Product::PRODUCT_PHOTO, Product::PRODUCT_NAME, Product::PRODUCT_CATEGORY_ID, Product::PRODUCT_DESCRIPTION, Product::PRODUCT_PRICE)
             ->where(Product::PRODUCT_USER_ID, $id)->get();
 
         $user = User::where(User::USER_ID, $id)->first()->value(User::USER_NAME);

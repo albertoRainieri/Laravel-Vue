@@ -7,93 +7,119 @@
 
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title>{{ config('app.name', 'Laravel') }}</title>
-  
+  <title>{{ config('app.name', 'E-commerce platform') }}</title>
+
 
   <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
 </head>
 <body class="hold-transition sidebar-mini">
-<div class="wrapper" id="app">
 
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+<div class="wrapper" id="app" style=" padding: 10px">
+
+
+{{--  <nav class="main-header navbar navbar-expand bg-blue navbar-dark border-bottom">--}}
+    <nav class="navbar navbar-dark navbar-expand bg-primary">
+
     <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
-      </li>
-    </ul>
 
+    <ul class="navbar-nav">
+
+        <li class="nav-item">
+
+            <a href="{{ url('/Dashboard') }}">
+                <h4 class="nav-link active" aria-current="page" style="padding-right: 35px">Home</h4>
+            </a>
+        </li>
+
+        <li class="nav-item" v-if="$gate.user.type == 'user' || $gate.user.type == 'admin'" style="padding-right: 35px">
+            <a href="{{ url('/PersonalArea') }}">
+                <h4 class="nav-link active" aria-current="page">Personal Area User</h4>
+            </a>
+        </li>
+
+        <li class="nav-item" v-if="$gate.user.type == 'supplier' || $gate.user.type == 'admin'" style="padding-right: 35px">
+            <a href="{{ url('/products') }}">
+                <h4 class="nav-link active" aria-current="page" >Personal Area Supplier</h4>
+            </a>
+        </li>
+
+        <li class="nav-item dropdown" v-if="$gate.user.type == 'admin'" style="padding-right: 35px">
+                <h4 class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+                    Settings Admin
+                </h4>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="{{ url('/category') }}">Category</a>
+                <a class="dropdown-item" href="{{ url('/tag') }}">Tag</a>
+                <a class="dropdown-item" href="{{ url('/developer') }}">Developer</a>
+                <a class="dropdown-item" href="{{ url('/users') }}" >
+                    Users List
+                </a>
+            </div>
+        </li>
+    </ul>
+        <ul class="navbar-nav" style="padding-left: 800px">
+        <li class="nav-item">
+            <h6 class="nav-link active" aria-current="page" style="padding-bottom: 0px">
+                Hi {{ Auth::user()->name }}
+            </h6>
+
+            <a href="{{ url('/logout') }}" class="btn btn-default btn-flat float-right"
+               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <h4 class="nav-link active" aria-current="page" style="padding-top: 0px">
+                    Logout
+                </h4>
+            </a>
+            <form id="logout-form" action="{{ url('logout') }}" method="POST"
+                  style="display: none;">
+                @csrf
+            </form>
+
+        </li>
+
+    </ul>
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
-      <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-        <div class="input-group-append">
-          <button class="btn btn-navbar" type="submit">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
+
+
+
 
   </nav>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <router-link to="/dashboard" class="brand-link">
-      <img src="{{ asset('/images/logo.png') }}" alt="The Logo" class="brand-image img-circle elevation-3"
-           style="opacity: .8">
-      <span class="brand-text font-weight-light">{{ config('app.name', 'Laravel') }}</span>
-    </router-link>
+{{--  <aside class="main-sidebar sidebar-dark-primary elevation-4">--}}
+{{--    <!-- Brand Logo -->--}}
+{{--    <router-link to="/dashboard" class="brand-link">--}}
+{{--      <img src="{{ asset('/images/logo.png') }}" alt="The Logo" class="brand-image img-circle elevation-3"--}}
+{{--           style="opacity: .8">--}}
+{{--      <span class="brand-text font-weight-light">{{ config('app.name', 'Laravel') }}</span>--}}
+{{--    </router-link>--}}
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-        <router-link to="/profile">
-          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-              <div class="image">
-                <img src="{{ auth()->user()->photo }}" class="img-circle elevation-2" alt="User Image">
-              </div>
-              <div class="info">
+{{--    <!-- Sidebar -->--}}
+{{--    <div class="sidebar">--}}
+{{--      <!-- Sidebar user panel (optional) -->--}}
+{{--        <router-link to="/profile">--}}
+{{--          <div class="user-panel mt-3 pb-3 mb-3 d-flex">--}}
+{{--              <div class="image">--}}
+{{--                <img src="{{ auth()->user()->photo }}" class="img-circle elevation-2" alt="User Image">--}}
+{{--              </div>--}}
+{{--              <div class="info">--}}
 
-                  {{ Auth::user()->name }}
-                  <span class="d-block text-muted">
-                    {{ Ucfirst(Auth::user()->type) }}
-                  </span>
-              </div>
-          </div>
-        </router-link>
+{{--                  {{ Auth::user()->name }}--}}
+{{--                  <span class="d-block text-muted">--}}
+{{--                    {{ Ucfirst(Auth::user()->type) }}--}}
+{{--                  </span>--}}
+{{--              </div>--}}
+{{--          </div>--}}
+{{--        </router-link>--}}
 
-      <!-- Sidebar Menu -->
-      @include('layouts.sidebar-menu')
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
+{{--      <!-- Sidebar Menu -->--}}
+{{--      @include('layouts.sidebar-menu')--}}
+{{--      <!-- /.sidebar-menu -->--}}
+{{--    </div>--}}
+{{--    <!-- /.sidebar -->--}}
+{{--  </aside>--}}
 
   {{-- Content Wrapper. Contains page content --}}
-  <div class="content-wrapper">
-    {{-- Main content --}}
-    
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        {{-- <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark"></h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Starter Page</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row --> --}}
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
 
     <!-- Main content -->
     <router-view></router-view>
@@ -101,7 +127,7 @@
     <vue-progress-bar></vue-progress-bar>
 
     {{-- /.content --}}
-  </div>
+
   {{-- /.content-wrapper --}}
 
   {{-- Main Footer --}}
@@ -119,6 +145,8 @@
 @auth
 <script>
     window.user = @json(auth()->user())
+
+
 </script>
 @endauth
 <script src="{{ mix('/js/app.js') }}"></script>

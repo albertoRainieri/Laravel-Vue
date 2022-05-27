@@ -1,46 +1,84 @@
 <template>
-    <ul className="about-company-list">
-
-
-        <li v-for="product in products.data">
-            <div v-if="$gate.user.type === 'admin' || $gate.user.type === 'user'" type="button" @click="newModal(product.id)">
-                <img :src="product.photo" width="300" height="200">
+    <div>
+        <div class="row row-cols-1 row-cols-md-2 g-4" >
+            <div v-for="product in products.data">
+                <div class="card">
+                    <div v-if="$gate.user.type === 'admin' || $gate.user.type === 'user'" type="button" @click="newModal(product.id, product.photo)">
+                        <div class="center">
+                            <img :src="product.photo" class="card-img-top" style="float: left; width:  200px; height: 200px; object-fit: cover;">
+                        </div>
+                    </div>
+                    <div v-if="$gate.user.type === 'supplier'" >
+                        <img :src="product.photo" class="card-img-top" style="float: left; width:  200px; height: 200px; object-fit: cover;">
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <h1> {{product.name}} <span class="badge bg-secondary">{{ product.price }} &euro;</span></h1>
+                        </div>
+                        <p class="card-text">{{product.description}}</p>
+                    </div>
+                    <div class="card-footer" v-if="$gate.user.type === 'admin' || $gate.user.type === 'user'">
+                        <a href="#" class="btn btn-primary" v-on:click="addToCart">Add to Cart</a>
+                    </div>
+                </div>
             </div>
-            <div v-if="$gate.user.type === 'supplier'" >
-                <img :src="product.photo" width="300" height="200">
-            </div>
-            <div class="col-6">
-                Title: {{product.name}}
-            </div>
-
-            <div class="col-6">
-                Description: {{product.description}}
-            </div>
-
-        </li>
+        </div>
 
         <div class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="addNew" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="row">
-                            <h5 class="modal-title" > Hi {{$gate.user.name}}! Do you want to add this item to your cart?</h5>
+                    <div>
+                        <div class="card-header">
+                            <h5 class="modal-title" > Hi {{$gate.user.name}}!</h5>
+
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
 
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button v-on:click="addToCart" type="submit" class="btn btn-primary">Add</button>
-                    </div>
+                        <div class="card-body">
+                            <div>
+                                <img :src="photo" class="card-img-top">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <h5 class="modal-title" > Do you want to add this item to your cart?</h5>
+                            </div>
+                        </div>
 
 
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button v-on:click="addToCart" type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </ul>
+    </div>
+
+
+<!--    <ul className="about-company-list">-->
+
+
+<!--        <li v-for="product in products.data">-->
+<!--            <div class="card" style="width: 18rem;">-->
+<!--                <div v-if="$gate.user.type === 'admin' || $gate.user.type === 'user'" type="button" @click="newModal(product.id)">-->
+<!--                    <img :src="product.photo" class="card-img-top" alt="...">-->
+<!--                </div>-->
+<!--                <div v-if="$gate.user.type === 'supplier'" >-->
+<!--                    <img :src="product.photo" class="card-img-top" alt="...">-->
+<!--                </div>                <div class="card-body">-->
+<!--                    <h5 class="card-title">{{product.name}}</h5>-->
+<!--                    <p class="card-text">{{product.description}}</p>-->
+<!--                    <a href="#" class="btn btn-primary" @click="newModal(product.id)">Add to Cart</a>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </li>-->
+
+<!--    </ul>-->
 
 </template>
 
@@ -52,6 +90,7 @@ export default {
         return {
             products: [],
             product_id: '',
+            photo: '',
         }
     },
 
@@ -93,9 +132,9 @@ export default {
             );
         },
 
-        newModal(id){
+        newModal(id, photo){
             this.product_id = id
-            console.log(this.product_id)
+            this.photo = photo
             this.editmode = false;
             //this.form.reset();
             $('#addNew').modal('show');
@@ -110,30 +149,9 @@ export default {
 </script>
 
 <style scoped>
-ul {
-    /* using CSS Grid Layout: */
-    display: grid;
-
-    /* defining the number of columns and rows; here we use
-       the repeat() function to create 2 columns, each column
-       of one fractional unit ('fr') of the available space
-       and six rows, each of one fractional unit of the available
-       space: */
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-
-    /* forcing the grid to place items automatically into the rows
-       rather than the columns: */
-    grid-auto-flow: rows;
-}
-
-li {
-    list-style-type: none;
-    padding: 1.25em 0 1.25em 50px;
-    font: 20px/24px "PT Root UI";
-    color: #272727;
-    mix-blend-mode: normal;
-    opacity: 0.8;
-    display: inline-block;
+.center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
 }
 </style>

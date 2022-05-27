@@ -1,27 +1,7 @@
 <template>
     <section class="content">
-        <div class="container-fluid">
             <div class="card-header">
                 <h1 class="card-title">Hi {{$gate.user.name}}! Find your Best Item</h1>
-
-                <div class="card-tools" v-if="$gate.user.type === 'supplier'">
-
-                    <a href="products">
-                        <button type="button" class="btn btn-sm btn-primary">
-                            <i class="fa fa-plus-square"></i>
-                            Your Personal Area (Supplier)
-                        </button>
-                    </a>
-                </div>
-
-                <div class="card-tools" v-if="$gate.user.type === 'user'">
-                    <a href="PersonalArea">
-                        <button type="button" class="btn btn-sm btn-primary">
-                            <i class="fa fa-plus-square"></i>
-                            Your Personal Area (User)
-                        </button>
-                    </a>
-                </div>
             </div>
             <!-- /.row -->
 
@@ -36,7 +16,6 @@
             <product></product>
 
 
-        </div><!--/. container-fluid -->
     </section>
 </template>
 
