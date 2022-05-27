@@ -58,56 +58,12 @@ A very simple Laravel 8 + Vue 2
 - `npm install`
 - `php artisan key:generate`
 - `php artisan migrate`
-- `php artisan db:seed --class=AdminUserSeeder`
+- `php artisan db:seed`
 - `php artisan passport:install`
 
 - Navigate to: http://localhost/
 - Login as 'admin' with these credentials: 'email': admin@admin.com, 'password': 'adminpass'
 - PhpMyAdmin for Database http://localhost:8081/
-
-
-[//]: # (## Unit Test)
-
-[//]: # ()
-[//]: # (#### run PHPUnit)
-
-[//]: # ()
-[//]: # (```bash)
-
-[//]: # (# run PHPUnit all test cases)
-
-[//]: # (vendor/bin/phpunit)
-
-[//]: # (# or Feature test only)
-
-[//]: # (vendor/bin/phpunit --testsuite Feature)
-[//]: # (```)
-
-[//]: # ()
-[//]: # (#### Code Coverage Report)
-
-[//]: # ()
-[//]: # (```bash)
-
-[//]: # (# reports is a directory name)
-
-[//]: # (#vendor/bin/phpunit --coverage-html reports/)
-
-[//]: # (```)
-
-[//]: # (A `reports` directory has been created for code coverage report. Open the dashboard.html.)
-
-[//]: # ()
-[//]: # ()
-[//]: # (## Credit)
-
-[//]: # (This repository is motivated by [Hujjat/laravStart]&#40;https://github.com/Hujjat/laravStart&#41; and his awesome video tutorial in [Youtube]&#40;https://www.youtube.com/playlist?list=PLB4AdipoHpxaHDLIaMdtro1eXnQtl_UvE&#41;.)
-
-[//]: # ()
-[//]: # (## License)
-
-[//]: # ()
-[//]: # ([MIT license]&#40;https://opensource.org/licenses/MIT&#41;.)
 
 
 ## About The Application
